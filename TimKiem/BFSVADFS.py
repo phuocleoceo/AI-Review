@@ -1,7 +1,7 @@
 V = ["S", "A", "B", "C", "D", "E", "F", "G", "H"]
-E = [("S", "A"), ("S", "B"), ("S", "C"), ("A", "D"), ("A", "B"),
-     ("B", "D"), ("B", "F"), ("B", "G"), ("C", "F"),
-     ("D", "E"), ("F", "E"), ("E", "G"), ("F", "H"), ("H", "G")]
+E = [("S", "A"), ("S", "B"), ("S", "C"), ("A", "D"),
+     ("B", "D"), ("B", "E"), ("B", "G"), ("C", "E"),
+     ("D", "F"), ("E", "H"), ("E", "F"), ("F", "G"), ("H", "G")]
 
 
 graph = {}
@@ -44,7 +44,7 @@ def BFS(inputState, goalState):
 
 
 print("Result of DFS: ")
-result = DFS('S', 'H')
+result = DFS('S', 'G')
 if result:
     s = 'explored '
     for i in result:
@@ -55,7 +55,7 @@ else:
 
 print("\n")
 print("Result of BFS: ")
-result = BFS("S", "H")
+result = BFS("S", "G")
 if result:
     s = 'explored '
     for i in result:
