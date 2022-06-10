@@ -105,27 +105,46 @@ def A_Star(tree: Tree, inititalState: Node, goal: Node) -> List[Node]:
 
 
 if __name__ == "__main__":
-    tree = Tree()
-    tree.add_nodes([Node('A', 6), Node('B', 3), Node('C', 4),
-                    Node('D', 5), Node('E', 3), Node('F', 1),
-                    Node('G', 6), Node('H', 2), Node('I', 5),
-                    Node('J', 4), Node('K', 2), Node('L', 0),
-                    Node('M', 4), Node('N', 0), Node('O', 4)])
+    V = [("S", 12), ("A", 7), ("B", 8), ("C", 9), ("D", 6), ("E", 5),
+         ("F", 4), ("G", 10), ("H", 10), ("K", 3), ("M", 9), ("N", 10), ("I", 6),
+         ("J", 0), ("L", 0), ("Z", 8)]
+    E = [("S", "A", 5), ("S", "B", 6), ("S", "C", 5),
+         ("A", "D", 6), ("A", "E", 7),
+         ("B", "F", 3), ("B", "G", 4),
+         ("C", "H", 6), ("C", "K", 4),
+         ("D", "M", 5), ("D", "N", 8),
+         ("E", "I", 8),
+         ("F", "J", 4), ("F", "L", 4),
+         ("K", "Z", 2)]
 
-    tree.add_edges([("A", "B", 2), ("A", "C", 1), ("A", "D", 3),
-                    ("B", "E", 5), ("B", "F", 4), ("C", "G", 6),
-                    ("C", "H", 3), ("D", "I", 2), ("D", "J", 4),
-                    ("F", "K", 2), ("F", "L", 1), ("F", "M", 4),
-                    ("H", "N", 2), ("H", "O", 4)])
+    tree = Tree()
+    for v in V:
+        tree.add_node(Node(v[0], v[1]))
+    for e in E:
+        tree.add_edge((e[0], e[1], e[2]))
 
     # Gốc -> chính nó thì có cost bằng 0
     tree.nodes[0].cost = 0
 
-    result = A_Star(tree, tree.nodes[0], tree.nodes[-1])
-    if result:
-        s = "Explored : "
-        for i in result:
-            s += i.label + " "
-            print(s)
-    else:
-        print("404 Not Found")
+    # Index cac dinh co trong so bang 0
+    V_0 = []
+    for i in range(len(V)):
+        if V[i][1] == 0:
+            V_0.append(i)
+    print(">> Các đỉnh có trọng sốt trên đỉnh bằng 0 là : ", end="")
+    for v0 in V_0:
+        print(V[v0][0], end=", ")
+
+    print("")
+    print(">> Giải thuật A* : ")
+
+    for v0 in V_0:
+        print(f"- Thứ tự khám phá từ S đến {V[v0][0]} : ")
+        result = A_Star(tree, tree.nodes[0], tree.nodes[v0])
+        if result:
+            s = "Explored : "
+            for i in result:
+                s += i.label + " "
+                print(s)
+        else:
+            print("404 Not Found")
